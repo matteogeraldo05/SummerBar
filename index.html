@@ -3,178 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNIVERSITY PROGRESS BAR</title>
+<title>Semester Countdown</title>
 <link rel="icon" type="image/x-icon" href="assets/images/clock.ico">
-<style>
-    @font-face {
-        font-family: "Arial Narrow Bold";
-        src: url("assets/fonts/arial_narrow_bold.TTF") format("truetype");
-    }
-
-    body {
-        background-color: black;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column; 
-        height: 100vh;
-        font-family: "Arial Narrow Bold", sans-serif;
-        overflow: hidden; /* Ensure no overflow issues */
-    }
-
-    .background-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 20s ease-in-out;
-        z-index: -1; /* Ensure it’s behind other content */
-    }
-
-    .progress-bar {
-        display: none;
-        width: 50%;
-        height: 30px;
-        background: radial-gradient(circle, white 10%, black 10%);
-        background-size: 5px 5px;
-        background-color: black;
-        border-radius: 15px;
-        overflow: hidden;
-        border: 2px solid white;
-        transition: opacity 0.5s;
-        margin-top: 3.6vw;
-        margin-bottom: -1vw;
-    }
-
-    .progress {
-        width: var(--progress);
-        height: 100%;
-        background-color: white;
-    }
-
-    .comp-text, .fall-text, .dawn-text {
-        color: white;
-        font-size: 7.2vw;
-        margin: -0.5vw 0;
-        opacity: 0;
-        letter-spacing: -3px;
-    }
-
-    .dawn-text {
-        font-size: 4.2vw;
-        letter-spacing: 0px;
-    }
-
-    .remain-text {
-        color: white;
-        font-size: 3.2vw;
-        margin: 20px 0;
-        opacity: 0;
-        transition: opacity 1s;
-    }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="background-wrapper"></div>
-    <div class="dawn-text" id="dawn-text"></div> 
-    <div class="fall-text" id="fall-text"></div>
-    <div class="comp-text" id="completion-text"></div>
+    <div class="dawn-text" id="dawn-text"></div>
+    <div class="semester-text" id="semester-text"></div>
     <div class="progress-bar">
         <div class="progress" style="--progress: calc(100% - (var(--days-left) / var(--total-days) * 100%));"></div>
     </div>
     <div class="remain-text" id="remaining-days-text"></div>
-<script>
-    // Fix mobile bug by preloading mp3
-    const majorasMask = new Audio("assets/audio/majoras_mask.mp3");
-    const fnafBells = new Audio("assets/audio/fnaf_bells.mp3");
-
-    function setOpacityWithDelay(elementId, opacity, delay) {
-        setTimeout(() => {
-            document.getElementById(elementId).style.opacity = opacity;
-        }, delay);
-    }
-
-    //funciton that changes background images (for finito)
-    function applyBackgroundImage(imageInQuestion) {
-        const backgroundWrapper = document.querySelector('.background-wrapper');
-        // Use template literals to insert the imageInQuestion parameter into the URL
-        backgroundWrapper.style.backgroundImage = `url('${imageInQuestion}')`;
-        setTimeout(() => {
-            backgroundWrapper.style.opacity = 1;
-        }, 10); 
-    }
-
-    function regularClick() {
-        if (daysLeft <= 0) {
-            finito();
-            return;
-        }
-
-        // Play audio
-        majorasMask.play();
-
-        setOpacityWithDelay("dawn-text", "1", 100);
-        setOpacityWithDelay("fall-text", "1", 550); 
-        setOpacityWithDelay("remaining-days-text", "1", 1800);
-
-        setTimeout(() => {
-            document.querySelector(".progress-bar").style.display = "block";
-            document.getElementById("dawn-text").innerText = "";
-            document.getElementById("fall-text").innerText = completionPercentage + "% of Fall Completed";
-        }, 5000);
-
-        // Prevent further clicks
-        document.removeEventListener("click", regularClick);
-    }
-
-    function finito() {
-        // Play audio
-        fnafBells.play();
-        setOpacityWithDelay("remaining-days-text", "1", 16000);
-        
-        setTimeout(() => {
-            applyBackgroundImage("worry.jpg");
-        }, 16000);
-
-        //setTimeout(() => {
-        //    applyBackgroundImage("out.png"); //
-        //}, 49000);
-
-        setTimeout(() => {
-            close();
-        }, 50000);
-
-        // Prevent further clicks
-        document.removeEventListener("click", regularClick);
-    }
-
-    // Detect click
-    document.addEventListener("click", regularClick);
-
-    // Calculations
-    const now = new Date();
-    const firstDate = new Date(2025, 8, 2);  // September 2th, 2025
-    const secondDate = new Date(2025, 11, 8); // December 8th, 2025
-    const totalDays = Math.ceil((secondDate - firstDate) / (1000 * 60 * 60 * 24));
-    const daysPassed = Math.ceil((now - firstDate) / (1000 * 60 * 60 * 24));
-    const daysLeft = totalDays - daysPassed;
-    const completionPercentage = ((daysPassed / totalDays) * 100).toFixed(0); // Removed decimal for style
-
-    // Update CSS
-    document.documentElement.style.setProperty("--days-left", Math.max(daysLeft, 0));
-    document.documentElement.style.setProperty("--total-days", totalDays);
-
-    // Update text 
-    document.getElementById("dawn-text").innerText = "Dawn of";//just changing "Dawn of" to "End of" as the semester aproaches its end
-    //TODO: implement method that automatically does this AND one that resets the timer acordint to fall / winter semesters
-    document.getElementById("fall-text").innerText = "The Fall Semester";
-    document.getElementById("remaining-days-text").innerText = "- " + Math.max(daysLeft, 0) + " Days Remain -";
-</script>
+    <script src="script.js" defer></script>
 </body>
 </html>

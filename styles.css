@@ -1,0 +1,72 @@
+@font-face {
+    font-family: "Arial Narrow Bold";
+    src: url("assets/fonts/arial_narrow_bold.TTF") format("truetype");
+}
+
+body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Arial Narrow Bold", sans-serif;
+    overflow: hidden;
+}
+
+.background-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 20s ease-in-out;
+    z-index: -1;
+}
+
+.progress-bar {
+    display: none;
+    width: 50%;
+    height: 30px;
+    background: radial-gradient(circle, white 10%, black 10%);
+    background-size: 5px 5px;
+    background-color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid white;
+    transition: opacity 0.5s;
+    margin-top: 2.5vw;
+    margin-bottom: 2vw;
+}
+
+.progress {
+    width: var(--progress);
+    height: 100%;
+    background-color: white;
+}
+
+.comp-text, .semester-text, .dawn-text {
+    color: white;
+    font-size: 7.2vw;
+    margin: -0.5vw 0;
+    opacity: 0;
+    letter-spacing: -3px;
+}
+
+.dawn-text {
+    font-size: 4.2vw;
+    letter-spacing: 0px;
+}
+
+.remain-text {
+    color: white;
+    font-size: 3.2vw;
+    margin: 20px 0;
+    opacity: 0;
+    transition: opacity 1s;
+}
