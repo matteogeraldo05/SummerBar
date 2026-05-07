@@ -63,7 +63,7 @@ function finito() {
 
 document.addEventListener("click", regularClick);
 
-const now = new Date(2026,11,1);
+const now = new Date();
 const semester = getCurrentSemester(now);
 
 let totalDays = 0, daysLeft = 0, completionPercentage = 0;
@@ -80,5 +80,5 @@ document.documentElement.style.setProperty("--total-days", totalDays);
 if (semester) {
     document.getElementById("dawn-text").innerText = "Dawn of";
     document.getElementById("semester-text").innerText = `The ${semester.name} Semester`;
-    document.getElementById("remaining-days-text").innerText = "- " + Math.max(daysLeft, 0) + " Days Remain -";
 }
+document.getElementById("remaining-days-text").innerText = "- " + Math.max(daysLeft, 0) + " Days Remain -";
